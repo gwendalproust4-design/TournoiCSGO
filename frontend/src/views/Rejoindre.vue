@@ -23,6 +23,24 @@ async function submit() {
   const data = await res.json();
   message.value = data.status;
 }
+
+const participants = ref([]);
+const message = ref("");
+
+async function getParticipants() {
+  const res = await fetch("http://localhost:8000/participants", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await res.json();
+  console.log(data)
+  participants.value = data;
+  message.value = data.status ?? "Données récupérées ✅";
+}
+
 </script>
 
 <template>
@@ -36,6 +54,7 @@ async function submit() {
         </h3>
       </div>
     </section>
+    <button @click="getParticipants">Afficher les participants</button>
     <section class="formulaire">
       <form @submit.prevent="submit" class="formContainer">
         <div class="grid">
