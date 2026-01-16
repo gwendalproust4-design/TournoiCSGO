@@ -1,17 +1,11 @@
 <script setup>
-// Plus de logique de films ici ! 
-// Juste le squelette.
+// Pas de script nécessaire pour l'instant
 </script>
 
 <template>
-  <header>
-    <nav>
-      <RouterLink to="/">Accueil</RouterLink> | 
-      <RouterLink to="/a-propos">À Propos</RouterLink> 
-    </nav>
-  </header>
-
-  <main>
-    <RouterView />
-  </main>
+  <RouterView />
 </template>
+
+<style>
+/* Pas de style global ici pour l'instant */
+</style>
