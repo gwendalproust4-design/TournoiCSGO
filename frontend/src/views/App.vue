@@ -6,7 +6,6 @@ const navLinks = ref([
   { text: 'Accueil', url: '/' },
   { text: 'Match', url: '/match' },
   { text: 'Rejoindre', url: '/rejoindre' },
-  { text: 'Tournois', url: '/' }, // Pour l'instant on laisse Accueil qui liste les tournois
   { text: 'Equipes', url: '/equipes' }, // Lien mis à jour
   { text: 'Classements', url: '/classements' } // Lien mis à jour
 ])
@@ -22,7 +21,7 @@ const navLinks = ref([
       <nav>
           <ul class="nav-links">
               <li v-for="(link, index) in navLinks" :key="index">
-                <router-link :to="link.url">{{ link.text }}</router-link>
+                <a :href="link.url">{{ link.text }}</a>
               </li>
           </ul>
       </nav>
