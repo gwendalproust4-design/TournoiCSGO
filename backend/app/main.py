@@ -122,10 +122,11 @@ def add_participant(
 @app.post("/equipes")
 def add_equipe(
     nom_equipe: str = Form(...),
-    participants: List[str] = Form(default=[])
+    joueurs: List[str] = Form(default=[])
 ):
     """
-    Crée une équipe et lie éventuellement des participants (créés à la volée si besoin).
+    Crée une équipe et lie des participants existants par leur ID ou Pseudo.
+    Aucun joueur n'est créé automatiquement.
     """
     conn = get_conn()
     cur = conn.cursor()
@@ -140,26 +141,24 @@ def add_equipe(
         # Saison 2026 par défaut (ID 3 dans notre seed)
         id_saison = 3
         
-        # 2. Traitement des participants
-        for pseudo in participants:
-            if not pseudo.strip():
+        # 2. Liaison dans membre_equipe pour chaque identifiant reçu
+        for j_ident in joueurs:
+            if not j_ident.strip():
                 continue
                 
-            # Vérifier si le participant existe
-            cur.execute("SELECT id_participant FROM participant WHERE pseudo = %s", (pseudo,))
-            row = cur.fetchone()
-            
-            if row:
-                id_participant = row[0]
+            # Recherche par ID si c'est un nombre, sinon par Pseudo
+            if j_ident.isdigit():
+                cur.execute("SELECT id_participant FROM participant WHERE id_participant = %s", (int(j_ident),))
             else:
-                # Création simplifiée si inexistant
-                cur.execute(
-                    "INSERT INTO participant (pseudo, date_naissance) VALUES (%s, '2000-01-01') RETURNING id_participant",
-                    (pseudo,)
-                )
-                id_participant = cur.fetchone()[0]
+                cur.execute("SELECT id_participant FROM participant WHERE pseudo = %s", (j_ident,))
             
-            # 3. Liaison dans membre_equipe
+            row = cur.fetchone()
+            if not row:
+                raise Exception(f"Le joueur '{j_ident}' n'existe pas dans la base. Veuillez le créer d'abord.")
+            
+            id_participant = row[0]
+            
+            # Insertion du lien
             cur.execute(
                 "INSERT INTO membre_equipe (id_participant, id_equipe, id_saison) VALUES (%s, %s, %s)",
                 (id_participant, id_equipe, id_saison)
@@ -173,4 +172,4 @@ def add_equipe(
         cur.close()
         conn.close()
     
-    return {"message": "Equipe et participants créés/liés avec succès", "id_equipe": id_equipe}
+    return {"message": "Equipe et participants liés avec succès", "id_equipe": id_equipe}
