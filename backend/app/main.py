@@ -89,6 +89,26 @@ def get_matchs():
     
     return list(matchs_dict.values())
 
+@app.get("/compo_equipe/{id_equipe}")
+def get_compo_equipe(id_equipe: int):
+    conn = get_conn()
+    cur = conn.cursor()
+    query = f"""
+        SELECT p.pseudo, p.pays
+        FROM membre_equipe AS me
+        INNER JOIN participant AS p
+        	ON me.id_participant = p.id_participant
+        WHERE me.id_equipe = {id_equipe}
+    """
+    cur.execute(query)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+    
+    return [{"pseudo": r[0], "pays": r[1]} for r in rows]
+
+
+
 # --- Gestion des Participants par Formulaire ---
 
 @app.post("/participants")
