@@ -1,11 +1,14 @@
 <script setup>
 import { ref } from 'vue'
 
-// Données du menu de navigation (Accessibles sur toutes les pages)
+// Données du menu de navigation mises à jour
 const navLinks = ref([
   { text: 'Accueil', url: '/' },
   { text: 'Match', url: '/match' },
-  { text: 'Rejoindre', url: '/rejoindre' }
+  { text: 'Rejoindre', url: '/rejoindre' },
+  { text: 'Tournois', url: '/' }, // Pour l'instant on laisse Accueil qui liste les tournois
+  { text: 'Equipes', url: '/equipes' }, // Lien mis à jour
+  { text: 'Classements', url: '/classements' } // Lien mis à jour
 ])
 </script>
 
@@ -19,13 +22,13 @@ const navLinks = ref([
       <nav>
           <ul class="nav-links">
               <li v-for="(link, index) in navLinks" :key="index">
-                <a :href="link.url">{{ link.text }}</a>
+                <router-link :to="link.url">{{ link.text }}</router-link>
               </li>
           </ul>
       </nav>
 
       <div class="auth-buttons">
-          <button class="btn btn-outline">Connexion</button>
+          <router-link to="/dashboard" class="btn btn-outline">Mon Espace</router-link>
           <button class="btn btn-primary">S'inscrire</button>
       </div>
   </header>

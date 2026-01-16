@@ -1,11 +1,13 @@
-// Fichier : src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
 
-// 1. IMPORTEZ votre nouveau fichier ici
 import HomeView from '../views/Home.vue'
 import AproposView from '../views/Apropos.vue' // <--- AJOUT
 import MatchView from '../views/Match.vue'
 import RejoindreView from '../views/Rejoindre.vue'
+import TournamentDetails from '../views/TournamentDetail.vue'
+import TeamsList from '../views/TeamsList.vue'      // <--- IMPORT
+import Leaderboard from '../views/Leaderboard.vue'  // <--- IMPORT
+import Dashboard from '../views/Dashboard.vue'      // <--- IMPORT
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,7 +32,13 @@ const router = createRouter({
       path: '/rejoindre',      // L'URL que vous voulez (ex: monsite.com/a-propos)
       name: 'rejoindre',        // Un petit nom interne pour Vue
       component: RejoindreView  // Le composant importé plus haut
-    }
+    },
+    { path: '/tournoi/:id', name: 'tournament-detail', component: TournamentDetails },
+
+    // Nouvelles routes
+    { path: '/equipes', name: 'teams', component: TeamsList },
+    { path: '/classements', name: 'leaderboard', component: Leaderboard },
+    { path: '/dashboard', name: 'dashboard', component: Dashboard }
   ]
 })
 

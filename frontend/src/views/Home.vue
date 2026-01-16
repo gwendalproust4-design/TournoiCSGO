@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-// Simulation de la table "JEU"
+// --- 1. SIMULATION DES DONNÉES (MOCK) ---
 const gamesData = {
   VALORANT: { 
     nom: 'VALORANT', 
@@ -25,7 +25,6 @@ const gamesData = {
   }
 }
 
-// Simulation de la table "TOURNOI"
 const featuredTournaments = ref([
   {
     numeroTournoi: 1, 
@@ -61,7 +60,6 @@ const featuredTournaments = ref([
   }
 ])
 
-// Helper pour afficher les infos complètes
 const getTournamentDisplay = (tourney) => {
   const game = gamesData[tourney.codeJeu]
   return {
@@ -109,7 +107,9 @@ const getTournamentDisplay = (tourney) => {
                         ● {{ displayData.statut }}
                     </div>
 
-                    <button class="btn btn-outline full-width">Voir les détails</button>
+                    <router-link :to="{ name: 'tournament-detail', params: { id: item.numeroTournoi } }" class="btn btn-outline full-width" style="text-align:center; display:block;">
+                        Voir les détails
+                    </router-link>
                 </div>
             </div>
         </div>
