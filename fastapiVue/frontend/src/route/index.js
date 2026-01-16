@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 1. IMPORTEZ votre nouveau fichier ici
 import HomeView from '../views/Home.vue'
 import AproposView from '../views/Apropos.vue' // <--- AJOUT
+import RejoindreView from '../views/Rejoindre.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,6 +19,11 @@ const router = createRouter({
       path: '/a-propos',      // L'URL que vous voulez (ex: monsite.com/a-propos)
       name: 'apropos',        // Un petit nom interne pour Vue
       component: AproposView  // Le composant importé plus haut
+    },
+    {
+      path: '/rejoindre',      // L'URL que vous voulez (ex: monsite.com/a-propos)
+      name: 'rejoindre',        // Un petit nom interne pour Vue
+      component: RejoindreView  // Le composant importé plus haut
     }
   ]
 })

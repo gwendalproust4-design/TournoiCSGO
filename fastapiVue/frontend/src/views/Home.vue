@@ -4,9 +4,8 @@ import { ref } from 'vue'
 // Données du menu
 const navLinks = ref([
   { text: 'Accueil', url: '#' },
-  { text: 'Tournois', url: '#' },
-  { text: 'Jeux', url: '#' },
-  { text: 'Classements', url: '#' }
+  { text: 'Match', url: '#' },
+  { text: 'Rejoindre', url: '#' }
 ])
 
 // Données des tournois
@@ -62,7 +61,6 @@ const featuredTournaments = ref([
             <button class="btn btn-primary">S'inscrire</button>
         </div>
     </header>
-
     <main>
         <section class="hero">
             <div class="hero-content">
